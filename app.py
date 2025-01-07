@@ -20,7 +20,8 @@ bnb_config = BitsAndBytesConfig(
 )
 # Load environment variables
 load_dotenv()
-api_key = os.getenv("HUGGING_FACE_API_KEY")
+# api_key = os.getenv("HUGGING_FACE_API_KEY")
+api_key = "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"
 model_name= "debapriyo/LogicRoom25_AlpacaFormat_Gemma_2_9B_4epoch_latest"
 
 # Load the Hugging Face model and tokenizer
