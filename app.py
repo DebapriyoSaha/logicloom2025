@@ -154,7 +154,7 @@ def load_model():
     tokenizer = AutoTokenizer.from_pretrained(peft_model_name, use_fast=True,trust_remote_code=True)
     # model.generation_config.cache_implementation = "static"
 
-    model.forward = torch.compile(model.forward, mode="reduce-overhead", fullgraph=True)
+    # model.forward = torch.compile(model.forward, mode="reduce-overhead", fullgraph=True)
 
     return tokenizer, model
 
