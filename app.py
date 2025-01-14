@@ -199,13 +199,13 @@ st.markdown(
     """
     Welcome to **Headline Helper**!  
     This app generates concise and click-worthy headlines for your news articles.  
-    Please enter a plain text article (minimum **20 words**) in the box below to get started.
+    Please enter a plain text article (**20-500 words) in the box below to get started.
     """
 )
 
 # Input box for the news article
 article = st.text_area(
-    "Enter the news article (plain text only, minimum 20 words):", 
+    "Enter the news article (plain text only, 20-500 words):", 
     height=300, 
     help="Paste the full news article here. Ensure it contains plain text only and is at least 20 words long."
 )
@@ -214,7 +214,7 @@ article = st.text_area(
 if st.button("✨ Generate Headline"):
     if article.strip():
         word_count = len(article.split())
-        if word_count < 20:
+        if word_count < 20 or word_count > 512:
             st.markdown(
                 f'<div class="error-box">⚠️The article is too short! It contains only {word_count} words. Please enter at least 20 words.</div>',
                 unsafe_allow_html=True,
