@@ -27,6 +27,9 @@ st.markdown(
         margin: 0;
         padding: 0;
     }
+    #MainMenu {
+  visibility: hidden;
+    }
     .stApp {
         background-color: #121212;
     }
