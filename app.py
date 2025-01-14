@@ -185,8 +185,8 @@ def is_valid_plain_text(input_text):
     code_patterns = [
         r'[{}\[\]<>]',  # Braces and brackets
         r'(#|//|/\*|\*/)',  # Comments
-        r'function\s*\(|var\s|let\s|const\s',  # JavaScript patterns
-        r'public\s|private\s|protected\s',  # Java/other OOP keywords
+        # r'function\s*\(|var\s|let\s|const\s',  # JavaScript patterns
+        # r'public\s|private\s|protected\s',  # Java/other OOP keywords
     ]
     for pattern in code_patterns:
         if re.search(pattern, input_text):
