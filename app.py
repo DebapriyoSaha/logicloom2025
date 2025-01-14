@@ -32,7 +32,7 @@ st.markdown(
       visibility: hidden;
     }
 
-    #st-emotion-cache-30do4w e3i9eg81, #st-emotion-cache-2qqdmp e1obcldf17{
+    .st-emotion-cache-30do4w e3i9eg81, .st-emotion-cache-2qqdmp e1obcldf17{
     display: none;
     }
     
@@ -117,8 +117,8 @@ st.markdown(
             font-size: 14px;
         }
 
-        #GithubIcon {
-          visibility: hidden;
+        .st-emotion-cache-30do4w e3i9eg81, .st-emotion-cache-2qqdmp e1obcldf17{
+        display: none;
         }
 
         .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
