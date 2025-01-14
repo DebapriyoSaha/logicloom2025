@@ -214,9 +214,14 @@ article = st.text_area(
 if st.button("✨ Generate Headline"):
     if article.strip():
         word_count = len(article.split())
-        if word_count < 20 or word_count > 512:
+        if word_count < 20:
             st.markdown(
                 f'<div class="error-box">⚠️The article is too short! It contains only {word_count} words. Please enter at least 20 words.</div>',
+                unsafe_allow_html=True,
+            )
+        elif word_count > 512:
+            st.markdown(
+                f'<div class="error-box">⚠️The article is too long! It contains {word_count} words. Please enter at most 512 words.</div>',
                 unsafe_allow_html=True,
             )
         elif not is_valid_plain_text(article):
