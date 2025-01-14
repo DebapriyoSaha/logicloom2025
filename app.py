@@ -27,6 +27,10 @@ st.markdown(
         margin: 0;
         padding: 0;
     }
+
+    #GithubIcon {
+      visibility: hidden;
+    }
     
     .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
     .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
@@ -109,6 +113,10 @@ st.markdown(
             font-size: 14px;
         }
 
+        #GithubIcon {
+          visibility: hidden;
+        }
+
         .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
         .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
         .viewerBadge_text__1JaDK {
@@ -140,33 +148,11 @@ st.markdown(
 # load_dotenv()
 # api_key = os.getenv("HF_TOKEN")
 peft_model_name = "debapriyo/LogicLoom2025_BART_latest"
-base_model_name = "facebook/bart-large-cnn"
 
 # @st.cache_resource
 def load_model():
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     pipe = pipeline("text2text-generation", model="debapriyo/LogicLoom2025_BART_latest")
-
-#     # model = AutoModelForSeq2SeqLM.from_pretrained(model_name, token=api_key)
-#     torch._dynamo.optimize("eager")
-#     base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_name, torch_dtype=torch.float16)
-#     print(base_model)
-
-#     # model = PeftModel.from_pretrained(base_model, peft_model_name)
-    
-
-#     model = AutoModelForCausalLM.from_pretrained(
-#             peft_model_name,
-#             torch_dtype=torch.float16,
-#             device_map="auto"  # Automatically map the model to available devices
-#             ).to(device)
-
-#     print(model)
-#     tokenizer = AutoTokenizer.from_pretrained(peft_model_name, use_fast=True,trust_remote_code=True)
-#     # model.generation_config.cache_implementation = "static"
-
-#     # model.forward = torch.compile(model.forward, mode="reduce-overhead", fullgraph=True)
-
     return pipe
 
 pipe = load_model()
