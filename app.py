@@ -1,14 +1,11 @@
 import streamlit as st
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, GenerationConfig, AutoModel, AutoModelForCausalLM
+from transformers import pipeline
 # from dotenv import load_dotenv
 import os
 import re
 import torch
 import string
 import time
-import torch._dynamo
-
-torch._dynamo.config.suppress_errors = True
 
 # Set page title and icon
 st.set_page_config(
@@ -128,37 +125,37 @@ st.markdown(
 # Load environment variables
 # load_dotenv()
 # api_key = os.getenv("HF_TOKEN")
-peft_model_name = "debapriyo/LogicLoom2025_BART"
+peft_model_name = "debapriyo/LogicLoom2025_BART_latest"
 base_model_name = "facebook/bart-large-cnn"
 
-@st.cache_resource
+# @st.cache_resource
 def load_model():
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-    print('Running on:', device)
+    pipe = pipeline("text2text-generation", model="debapriyo/LogicLoom2025_BART_latest")
 
-    # model = AutoModelForSeq2SeqLM.from_pretrained(model_name, token=api_key)
-    torch._dynamo.optimize("eager")
-    base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_name, torch_dtype=torch.float16)
-    print(base_model)
+#     # model = AutoModelForSeq2SeqLM.from_pretrained(model_name, token=api_key)
+#     torch._dynamo.optimize("eager")
+#     base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_name, torch_dtype=torch.float16)
+#     print(base_model)
 
-    # model = PeftModel.from_pretrained(base_model, peft_model_name)
+#     # model = PeftModel.from_pretrained(base_model, peft_model_name)
     
 
-    model = AutoModelForCausalLM.from_pretrained(
-            peft_model_name,
-            torch_dtype=torch.float16,
-            device_map="auto"  # Automatically map the model to available devices
-            ).to(device)
+#     model = AutoModelForCausalLM.from_pretrained(
+#             peft_model_name,
+#             torch_dtype=torch.float16,
+#             device_map="auto"  # Automatically map the model to available devices
+#             ).to(device)
 
-    print(model)
-    tokenizer = AutoTokenizer.from_pretrained(peft_model_name, use_fast=True,trust_remote_code=True)
-    # model.generation_config.cache_implementation = "static"
+#     print(model)
+#     tokenizer = AutoTokenizer.from_pretrained(peft_model_name, use_fast=True,trust_remote_code=True)
+#     # model.generation_config.cache_implementation = "static"
 
-    # model.forward = torch.compile(model.forward, mode="reduce-overhead", fullgraph=True)
+#     # model.forward = torch.compile(model.forward, mode="reduce-overhead", fullgraph=True)
 
-    return tokenizer, model
+    return pipe
 
-tokenizer, model = load_model()
+pipe = load_model()
 
 # Preprocess the input text
 def preprocess_text(text):
@@ -170,52 +167,12 @@ def preprocess_text(text):
     text = text.lower()
     return text
 
-def prepare_input_text(text):
-    input_text = f"Analyze the news content to generate creating engaging, concise, and click-worthy titles that resonate with readers and drive traffic. Ensure your answer is based on the information from the News.\n\n News: {text}."
-    return input_text
-
 def generate_response(input_text):
 
-    prompt = f"Create an engaging, accurate headline for this news article while maintaining context: {input_text} "
-
-    inputs = tokenizer(
-                    prompt,
-                    return_tensors="pt",
-                    truncation=True,
-                    max_length=512,
-                    )["input_ids"].to(model.device)
-
-    generate_kwargs = {
-        "input_ids": inputs,
-        # "max_length": 50,
-        # "min_length":25,
-        # "length_penalty":2.0,
-        # "num_beams":4,
-        # "temperature":0.7,        # Creativity control
-        # "top_p":0.9, 
-        "do_sample":True,
-        "early_stopping":True
-    }
-
-    with torch.inference_mode():
-        outputs = model.generate(**generate_kwargs)
-
-    decoded_output = tokenizer.decode(outputs[0], skip_special_tokens=True)
-
-
-    # inputs = tokenizer(prompt, return_tensors='pt',padding=True, max_length=1024, truncation=True)
-    # output_peft = tokenizer.decode(
-    #     model.generate(
-    #         input_ids=inputs['input_ids'].cpu(),
-    #         generation_config=GenerationConfig(max_new_tokens=50,
-    #                                            temperatue=0.7,
-    #                                            num_beams=5,
-    #                                            early_stopping=True,
-    #                                            length_penalty=2,
-    #                                            do_sample=True),
-    #     )[0],
-    #     skip_special_tokens=True
-    # )
+    # Perform inference
+    output = pipe(input_text, max_length=60, temperature=0.7, num_beams=4, early_stopping=True, length_penalty=2, do_sample=True,)
+    
+    decoded_output=output[0]["generated_text"]
     return decoded_output
 
 # Define a function to validate text input
