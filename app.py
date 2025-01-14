@@ -27,9 +27,13 @@ st.markdown(
         margin: 0;
         padding: 0;
     }
-    #MainMenu {
-  visibility: hidden;
+    
+    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+    .viewerBadge_text__1JaDK {
+        display: none;
     }
+    
     .stApp {
         background-color: #121212;
     }
@@ -104,6 +108,13 @@ st.markdown(
         body {
             font-size: 14px;
         }
+
+        .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+        .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+        .viewerBadge_text__1JaDK {
+            display: none;
+        }
+    
         .stButton > button {
             padding: 8px 16px;
             font-size: 14px;
