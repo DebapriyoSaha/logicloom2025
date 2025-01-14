@@ -215,7 +215,7 @@ st.markdown(
 
 # Input box for the news article
 article = st.text_area(
-    "Enter the news article (plain text only, minimum 50 words):", 
+    "Enter the news article (plain text only, minimum 20 words):", 
     height=300, 
     help="Paste the full news article here. Ensure it contains plain text only and is at least 50 words long."
 )
@@ -224,7 +224,7 @@ article = st.text_area(
 if st.button("✨ Generate Headline"):
     if article.strip():
         word_count = len(article.split())
-        if word_count < 50:
+        if word_count < 20:
             st.markdown(
                 f'<div class="error-box">⚠️The article is too short! It contains only {word_count} words. Please enter at least 50 words.</div>',
                 unsafe_allow_html=True,
