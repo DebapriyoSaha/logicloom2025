@@ -199,7 +199,7 @@ st.markdown(
     """
     Welcome to **Headline Helper**!  
     This app generates concise and click-worthy headlines for your news articles.  
-    Please enter a plain text article (**20-500 words) in the box below to get started.
+    Please enter a plain text article (**20-500 words**) in the box below to get started.
     """
 )
 
