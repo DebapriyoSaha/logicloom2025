@@ -32,7 +32,7 @@ st.markdown(
       visibility: hidden;
     }
 
-    #st-emotion-cache-30do4w e3i9eg81{
+    #st-emotion-cache-30do4w e3i9eg81, #st-emotion-cache-2qqdmp e1obcldf17{
     display: none;
     }
     
