@@ -174,7 +174,7 @@ def preprocess_text(text):
 def generate_response(input_text):
 
     # Perform inference
-    output = pipe(input_text, max_length=60, temperature=0.7, num_beams=4, early_stopping=True, length_penalty=2, do_sample=True,)
+    output = pipe(input_text, max_length=60, temperature=0.7, num_beams=4, early_stopping=True, length_penalty=2, do_sample=True,bos_token_id=0)
     
     decoded_output=output[0]["generated_text"]
     return decoded_output
